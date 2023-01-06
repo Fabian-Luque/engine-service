@@ -90,8 +90,7 @@ export class AccountsModule {
       //   LockAccountCommand.name,
       //   new LockAccountCommand(this.entityIdTransformer.from(account.id)),
       // ),
-      console.log(account)
-      
+      console.log(account),
     );
   }
 }
