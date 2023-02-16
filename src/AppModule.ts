@@ -14,17 +14,19 @@ import { RequestStorageMiddleware } from 'libs/RequestStorageMiddleware';
 
 import { AppController } from 'src/AppController';
 import { AppService } from 'src/AppService';
-import { AccountsModule } from 'src/account/AccountsModule';
+// import { AccountsModule } from 'src/account/AccountsModule';
 import { NotificationModule } from 'src/notification/NotificationModule';
+import { ServiceModule } from './service/ServiceModule';
 
 @Module({
   imports: [
-    AccountsModule,
+    // AccountsModule,
     DatabaseModule,
     // MessageModule,
     CacheModule.register({ isGlobal: true }),
     ThrottlerModule.forRoot(),
     NotificationModule,
+    ServiceModule,
     ScheduleModule.forRoot(),
   ],
   controllers: [AppController],

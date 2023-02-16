@@ -7,6 +7,8 @@ export interface PasswordGenerator {
 
 class PasswordGeneratorImplement implements PasswordGenerator {
   generateKey(secret: string): string {
+    // implement cifrado de contraseña
+    return secret;
     return pbkdf2Sync(secret, 'salt', 100000, 256, 'sha512').toString();
   }
 }

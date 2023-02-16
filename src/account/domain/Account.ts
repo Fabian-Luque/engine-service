@@ -22,6 +22,7 @@ export type AccountEssentialProperties = Readonly<
 export type AccountOptionalProperties = Readonly<
   Partial<{
     password: string;
+    id2: number;
     balance: number;
     lockedAt: Date | null;
     createdAt: Date;
@@ -47,6 +48,7 @@ export interface Account {
 
 export class AccountImplement extends AggregateRoot implements Account {
   private readonly id: string;
+  private readonly id2: string;
   private readonly name: string;
   private readonly email: string;
   private password: string;

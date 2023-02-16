@@ -52,7 +52,7 @@ class AuthGuard implements CanActivate {
   }
 }
 
-export type AuthorizedHeader = Readonly<{ accountId: string }>;
+export type AuthorizedHeader = Readonly<{ serviceId: number }>;
 
 export const Auth = () =>
   applyDecorators(

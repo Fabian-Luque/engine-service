@@ -22,6 +22,7 @@ export class AccountFactory {
       new AccountImplement({
         ...options,
         balance: 0,
+        id2: 0,
         lockedAt: null,
         createdAt: new Date(),
         updatedAt: new Date(),

@@ -1,8 +1,8 @@
 {
-  "name": "example",
+  "name": "engine-service",
   "version": "0.0.1",
   "description": "",
-  "author": "kyhsa93",
+  "author": "kzelly",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -10,14 +10,15 @@
     "build": "nest build",
     "start": "nest start",
     "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
+    "start:debug": "nest start --debug 0.0.0.0:9229 --watch",
     "start:prod": "node dist/main",
     "lint": "eslint ./src ./libs --fix",
     "test": "jest --clearCache && jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm:cli": "ts-node ./node_modules/typeorm/cli -d ./libs/typeormDatasource.ts"
   },
   "dependencies": {
     "@aws-sdk/client-ses": "^3.204.0",
@@ -48,7 +49,8 @@
     "rxjs": "^7.5.6",
     "swagger-ui-express": "^4.5.0",
     "typeorm": "^0.3.9",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "webpack": "^5.75.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.1.1",

@@ -96,8 +96,8 @@ export class AccountsController {
     @Param() param: WithdrawRequestParam,
     @Body() body: WithdrawRequestDTO,
   ): Promise<void> {
-    if (header.accountId !== param.accountId)
-      throw new NotFoundException(ErrorMessage.ACCOUNT_IS_NOT_FOUND);
+    // if (header.accountId !== param.accountId)
+    //   throw new NotFoundException(ErrorMessage.ACCOUNT_IS_NOT_FOUND);
     await this.commandBus.execute(
       new WithdrawCommand(param.accountId, body.amount),
     );
@@ -119,8 +119,8 @@ export class AccountsController {
     @Param() param: DepositRequestParam,
     @Body() body: DepositRequestDto,
   ): Promise<void> {
-    if (header.accountId !== param.accountId)
-      throw new NotFoundException(ErrorMessage.ACCOUNT_IS_NOT_FOUND);
+    // if (header.accountId !== param.accountId)
+    //   throw new NotFoundException(ErrorMessage.ACCOUNT_IS_NOT_FOUND);
     await this.commandBus.execute(
       new DepositCommand(param.accountId, body.amount),
     );
@@ -146,8 +146,8 @@ export class AccountsController {
     @Param() param: RemitRequestParam,
     @Body() body: RemitRequestDTO,
   ): Promise<void> {
-    if (header.accountId !== param.accountId)
-      throw new NotFoundException(ErrorMessage.ACCOUNT_IS_NOT_FOUND);
+    // if (header.accountId !== param.accountId)
+    //   throw new NotFoundException(ErrorMessage.ACCOUNT_IS_NOT_FOUND);
     await this.commandBus.execute(
       new RemitCommand(param.accountId, body.receiverId, body.amount),
     );
@@ -167,8 +167,8 @@ export class AccountsController {
     @Param() param: UpdatePasswordRequestParam,
     @Body() body: UpdatePasswordRequestDTO,
   ): Promise<void> {
-    if (header.accountId !== param.accountId)
-      throw new NotFoundException(ErrorMessage.ACCOUNT_IS_NOT_FOUND);
+    // if (header.accountId !== param.accountId)
+    //   throw new NotFoundException(ErrorMessage.ACCOUNT_IS_NOT_FOUND);
     await this.commandBus.execute(
       new UpdatePasswordCommand(param.accountId, body.password),
     );
@@ -190,8 +190,8 @@ export class AccountsController {
     @Headers() header: AuthorizedHeader,
     @Param() param: DeleteAccountRequestParam,
   ): Promise<void> {
-    if (header.accountId !== param.accountId)
-      throw new NotFoundException(ErrorMessage.ACCOUNT_IS_NOT_FOUND);
+    // if (header.accountId !== param.accountId)
+    //   throw new NotFoundException(ErrorMessage.ACCOUNT_IS_NOT_FOUND);
     await this.commandBus.execute(new CloseAccountCommand(param.accountId));
   }
 
@@ -230,8 +230,8 @@ export class AccountsController {
     @Headers() header: AuthorizedHeader,
     @Param() param: FindAccountByIdRequestParam,
   ): Promise<FindAccountByIdResponseDTO> {
-    if (header.accountId !== param.accountId)
-      throw new NotFoundException(ErrorMessage.ACCOUNT_IS_NOT_FOUND);
+    // if (header.accountId !== param.accountId)
+    //   throw new NotFoundException(ErrorMessage.ACCOUNT_IS_NOT_FOUND);
     return this.queryBus.execute(new FindAccountByIdQuery(param.accountId));
   }
 }

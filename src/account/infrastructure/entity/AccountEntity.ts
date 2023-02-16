@@ -1,11 +1,13 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
-
-import { BaseEntity } from 'src/account/infrastructure/entity/BaseEntity';
+import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity } from './BaseEntity';
 
 @Entity()
 export class AccountEntity extends BaseEntity {
   @PrimaryColumn({ type: 'binary', length: 16 })
   id: Buffer;
+
+  @PrimaryGeneratedColumn()
+  id2: number;
 
   @Column()
   name: string;

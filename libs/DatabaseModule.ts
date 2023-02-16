@@ -11,9 +11,15 @@ import {
 
 import { Config } from 'src/Config';
 
-import { AccountEntity } from 'src/account/infrastructure/entity/AccountEntity';
 import { NotificationEntity } from 'src/notification/infrastructure/entities/NotificationEntity';
+import { ServiceEntity } from 'src/service/infrastructure/entities/ServiceEntity';
 import { v4 } from 'uuid';
+import { VehicleEntity } from '../src/service/infrastructure/entities/VehicleEntity';
+import { VehicleOwnerEntity } from '../src/service/infrastructure/entities/VehicleOwnerEntity';
+import { EvidenceEntity } from '../src/service/infrastructure/entities/EvidenceEntity';
+import { CommentEntity } from '../src/service/infrastructure/entities/CommentEntity';
+import { RequestEntity } from '../src/service/infrastructure/entities/RequestEntity';
+import { BillingEntity } from '../src/service/infrastructure/entities/BillingEntity';
 
 interface WriteConnection {
   readonly startTransaction: (
@@ -47,7 +53,16 @@ export let readConnection = {} as ReadConnection;
 class DatabaseService implements OnModuleInit, OnModuleDestroy {
   private readonly dataSource = new DataSource({
     type: 'mysql',
-    entities: [AccountEntity, NotificationEntity],
+    entities: [
+      NotificationEntity,
+      ServiceEntity,
+      VehicleEntity,
+      VehicleOwnerEntity,
+      EvidenceEntity,
+      CommentEntity,
+      RequestEntity,
+      BillingEntity,
+    ],
     charset: 'utf8mb4_unicode_ci',
     logging: Config.DATABASE_LOGGING,
     host: Config.DATABASE_HOST,

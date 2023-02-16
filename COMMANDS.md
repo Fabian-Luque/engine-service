@@ -1,0 +1,1 @@
+npm run typeorm:cli schema:sync

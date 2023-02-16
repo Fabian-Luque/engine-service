@@ -125,32 +125,28 @@ class SQSConsumerService implements OnModuleDestroy {
 }
 
 export enum Topic {
-  ACCOUNT_OPENED = 'AccountOpened',
-  ACCOUNT_PASSWORD_UPDATED = 'AccountPasswordUpdated',
-  ACCOUNT_CLOSED = 'AccountClosed',
-  ACCOUNT_DEPOSITED = 'AccountDeposited',
-  ACCOUNT_WITHDRAWN = 'AccountWithdrawn',
+  SERVICE_INIT = 'ServiceInit',
+  SERVICE_FINISH = 'ServiceFinish',
+  SERVICE_REQUEST = 'ServiceRquest',
+  STATE_UPDATE = 'StateUpdate',
 }
 
-export class AccountOpened {
-  constructor(readonly accountId: string, readonly email: string) {}
+export class InitService {
+  constructor(readonly serviceId: number) {}
 }
 
-export class AccountPasswordUpdated {
-  constructor(readonly accountId: string, readonly email: string) {}
+export class FinishService {
+  constructor(readonly serviceId: number) {}
 }
 
-export class AccountClosed {
-  constructor(readonly accountId: string, readonly email: string) {}
+export class RequestService {
+  constructor(readonly serviceId: number) {}
 }
 
-export class AccountDeposited {
-  constructor(readonly accountId: string, readonly email: string) {}
+export class StateUpdate {
+  constructor(readonly serviceId: number) {}
 }
 
-export class AccountWithdrawn {
-  constructor(readonly accountId: string, readonly email: string) {}
-}
 
 class SNSMessagePublisher {
   private readonly snsClient = new SNSClient({
