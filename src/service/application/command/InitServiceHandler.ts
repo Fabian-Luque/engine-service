@@ -2,13 +2,12 @@ import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 import { Transactional } from 'libs/Transactional';
-import { ServiceFactory } from '../../domain/ServiceFactory';
-import { ServiceRepository } from '../../domain/ServiceRepository';
-import { VehicleOwnerRepository } from '../../domain/VehicleOwnerRepository';
-import { VehicleRepository } from '../../domain/VehicleRepository';
-
 import { InjectionToken } from '../InjectionToken';
 import { InitServiceCommand } from './InitServiceCommand';
+import { ServiceFactory } from '../../domain/service/ServiceFactory';
+import { VehicleRepository } from '../../domain/vehicle/VehicleRepository';
+import { ServiceRepository } from '../../domain/service/ServiceRepository';
+import { VehicleOwnerRepository } from '../../domain/vehicleOwner/VehicleOwnerRepository';
 
 @CommandHandler(InitServiceCommand)
 export class InitServiceHandler
@@ -24,15 +23,12 @@ export class InitServiceHandler
 
   @Transactional()
   async execute(command: InitServiceCommand): Promise<void> {
-    const vehicleOwner = await this.vehicleOwnerRepository.findByIdOrCreate(
-      command.vehicleOwner,
-    );
-
     const service = this.serviceFactory.create({
       vehicle: command.vehicle,
-      vehicleOwner,
+      vehicleOwner: command.vehicleOwner,
       typeService: command.typeService,
       commentOwner: command.commentOwner,
+      garageId: command.garageId,
     });
     service.init();
 

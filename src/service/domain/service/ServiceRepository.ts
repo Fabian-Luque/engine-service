@@ -1,7 +1,7 @@
-import { Service } from 'src/service/domain/Service';
+import { Service } from 'src/service/domain/service/Service';
 
 export interface ServiceRepository {
-  save: (account: Service | Service[]) => Promise<void>;
+  save: (data: Service | Service[]) => Promise<void>;
   findById: (id: number) => Promise<Service | null>;
   findByOT: (ot: string) => Promise<Service | null>;
   findByIdAndUpdate: (id: number, service: Service) => Promise<Service | null>;

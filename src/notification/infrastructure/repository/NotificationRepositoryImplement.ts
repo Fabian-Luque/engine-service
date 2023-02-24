@@ -36,7 +36,7 @@ export class NotificationRepositoryImplement implements NotificationRepository {
     return Object.assign(new NotificationEntity(), {
       ...properties,
       id: this.entityIdTransformer.to(properties.id),
-      accountId: this.entityIdTransformer.to(properties.accountId),
+      accountId: this.entityIdTransformer.to(properties.userId),
     });
   }
 }

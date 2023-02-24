@@ -3,9 +3,9 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 import { Transactional } from 'libs/Transactional';
 import { ErrorMessage } from '../../domain/ErrorMessage';
-import { State } from '../../domain/Service';
-import { ServiceFactory } from '../../domain/ServiceFactory';
-import { ServiceRepository } from '../../domain/ServiceRepository';
+import { State } from '../../domain/service/Service';
+import { ServiceFactory } from '../../domain/service/ServiceFactory';
+import { ServiceRepository } from '../../domain/service/ServiceRepository';
 
 import { InjectionToken } from '../InjectionToken';
 import { UpdateServiceStateCommand } from './UpdateServiceStateCommand';

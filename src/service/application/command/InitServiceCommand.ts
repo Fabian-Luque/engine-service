@@ -1,12 +1,10 @@
 import { ICommand } from '@nestjs/cqrs';
-import { VehicleOwner } from '../../domain/Service';
-import { Vehicle } from '../../domain/Vehicle';
-
 export class InitServiceCommand implements ICommand {
   constructor(
     readonly vehicle: number,
-    readonly vehicleOwner: VehicleOwner,
+    readonly vehicleOwner: number,
     readonly typeService: number,
     readonly commentOwner: string,
+    readonly garageId: number,
   ) {}
 }

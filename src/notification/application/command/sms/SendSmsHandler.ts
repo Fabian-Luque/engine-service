@@ -4,7 +4,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Transactional } from 'libs/Transactional';
 import { EmailAdaptor } from 'src/notification/application/adaptor/EmailAdaptor';
 
-import { SendEmailCommand } from 'src/notification/application/command/SendEmailCommand';
+import { SendEmailCommand } from 'src/notification/application/command/email/SendEmailCommand';
 import { InjectionToken } from 'src/notification/application/InjectionToken';
 
 import { NotificationFactory } from 'src/notification/domain/NotificationFactory';

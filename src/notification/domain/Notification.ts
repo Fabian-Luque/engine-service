@@ -2,7 +2,7 @@ import { AggregateRoot } from '@nestjs/cqrs';
 
 export type NotificationProperties = Readonly<{
   id: string;
-  accountId: string;
+  userId: string;
   to: string;
   subject: string;
   content: string;

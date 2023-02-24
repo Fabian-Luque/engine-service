@@ -7,7 +7,7 @@ import {
   OnModuleDestroy,
   SetMetadata,
 } from '@nestjs/common';
-import { Kafka } from "kafkajs";
+import { Kafka } from 'kafkajs';
 import { IEvent } from '@nestjs/cqrs';
 import { Interval } from '@nestjs/schedule';
 import { ModulesContainer } from '@nestjs/core';
@@ -24,8 +24,6 @@ import {
   SNSClient,
   PublishCommand,
 } from '@aws-sdk/client-sns';
-
-
 
 import { Config } from 'src/Config';
 import { RequestStorage } from 'libs/RequestStorage';
@@ -147,7 +145,6 @@ export class StateUpdate {
   constructor(readonly serviceId: number) {}
 }
 
-
 class SNSMessagePublisher {
   private readonly snsClient = new SNSClient({
     region: Config.AWS_REGION,
@@ -171,11 +168,14 @@ class SNSMessagePublisher {
 }
 
 class KAFKAMessagePublisher {
-  private readonly kafka = new Kafka({brokers: ["kafka:9092"], clientId: "service-app"});
+  private readonly kafka = new Kafka({
+    brokers: ['kafka:9092'],
+    clientId: 'service-app',
+  });
   private readonly kfkClient = this.kafka.producer({
     maxInFlightRequests: 1,
     idempotent: true,
-    transactionalId: "uniqueProducerId",
+    transactionalId: 'uniqueProducerId',
   });
 
   private readonly logger = new Logger('KAFKA Publish');
@@ -183,7 +183,7 @@ class KAFKAMessagePublisher {
   async publish(Name: Topic, Message: Message): Promise<void> {
     const message = {
       topic: Name,
-      messages: [{key: "test", value: JSON.stringify(Message)}],
+      messages: [{ key: 'test', value: JSON.stringify(Message) }],
     };
     await this.kfkClient.send(message);
     this.logger.log(`Message published. Message: ${JSON.stringify(message)}`);
@@ -203,7 +203,7 @@ class IntegrationEventPublisherImplement implements IntegrationEventPublisher {
       name,
       body,
       requestId: RequestStorage.getStorage().requestId,
-    })
+    });
     // await this.snsMessagePublisher.publish(name, {
     //   name,
     //   body,
@@ -259,7 +259,7 @@ export const TASK_PUBLISHER = 'TaskPublisher';
     SQSMessagePublisher,
     SNSMessagePublisher,
     {
-      provide: INTEGRATION_EVENT_PUBLISHER,           //FOR MESSAGE
+      provide: INTEGRATION_EVENT_PUBLISHER, //FOR MESSAGE
       useClass: IntegrationEventPublisherImplement,
     },
     // {

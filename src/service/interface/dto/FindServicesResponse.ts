@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { ServiceResult } from '../../application/query/ServiceResult';
-import { Evidence, VehicleOwner } from '../../domain/Service';
-import { Vehicle } from '../../domain/Vehicle';
+import { ServiceResult } from '../../application/query/service/ServiceResult';
+import { Evidence } from '../../domain/service/Service';
 import { VehicleEntity } from '../../infrastructure/entities/VehicleEntity';
+import { VehicleOwnerEntity } from '../../infrastructure/entities/VehicleOwnerEntity';
 
 export class FindServicesResponseDTO extends ServiceResult {
   @ApiProperty({ example: 1 })
@@ -22,10 +22,10 @@ export class FindServicesResponseDTO extends ServiceResult {
   readonly vehicle: VehicleEntity;
 
   @ApiProperty()
-  readonly vehicleOwner: VehicleOwner;
+  readonly vehicleOwner: VehicleOwnerEntity;
 
   @ApiProperty()
-  readonly requests: VehicleOwner;
+  readonly requests: any[];
 
   @ApiProperty()
   readonly comments: Comment[];

@@ -1,9 +1,11 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { FinishServiceEvent } from './event/FinishServiceEvent';
-import { InitServiceEvent } from './event/InitServiceEvent';
-import { RequestServiceEvent } from './event/RequestServiceEvent';
-import { StateUpdateEvent } from './event/StateUpdateEvent';
-import { Vehicle } from './Vehicle';
+import { ids } from 'webpack';
+import { FinishServiceEvent } from '../event/FinishServiceEvent';
+import { InitServiceEvent } from '../event/InitServiceEvent';
+import { RequestServiceEvent } from '../event/RequestServiceEvent';
+import { StateUpdateEvent } from '../event/StateUpdateEvent';
+import { Vehicle } from '../vehicle/Vehicle';
+import { VehicleOwner } from '../vehicleOwner/VehicleOwner';
 
 export enum State {
   CREATED = 'CREATED',
@@ -17,7 +19,8 @@ export enum State {
 export type ServiceEssentialProperties = Readonly<
   Required<{
     vehicle: number | any;
-    vehicleOwner: VehicleOwner;
+    vehicleOwner: number | any;
+    garageId: number;
   }>
 >;
 
@@ -54,6 +57,7 @@ export class ServiceImplement extends AggregateRoot implements Service {
   private readonly typeService: number;
   private readonly commentOwner: string;
   private readonly creartedAt: Date;
+  private readonly garageId: number;
   private OT: string;
   private state: State;
   private updatedAt: Date;
@@ -123,10 +127,6 @@ export interface Comment {
 }
 export interface RequestService {
   id: number;
-}
-export interface VehicleOwner {
-  id: number;
-  name: string;
 }
 export interface Evidence {
   // id: number;

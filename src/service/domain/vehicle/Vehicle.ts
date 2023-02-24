@@ -3,7 +3,11 @@ import { AggregateRoot } from '@nestjs/cqrs';
 export type ServiceEssentialProperties = Readonly<
   Required<{
     patent: string;
-    vehicleOwner: VehicleOwner;
+    model: string;
+    brand: string;
+    year: number;
+    vin: string;
+    img: string;
   }>
 >;
 
@@ -23,9 +27,13 @@ export interface Vehicle {
 }
 export class VehicleImplement extends AggregateRoot implements Vehicle {
   private readonly id: number;
-  private readonly vehicleOwner: VehicleOwner;
   private readonly creartedAt: Date;
   private patent: string;
+  private model: string;
+  private brand: string;
+  private year: number;
+  private img: string;
+  private vin: string;
   private updatedAt: Date;
   private deletedAt: Date | null;
 
@@ -37,9 +45,4 @@ export class VehicleImplement extends AggregateRoot implements Vehicle {
   setPatent(patent: string): void {
     this.patent = patent;
   }
-}
-
-export interface VehicleOwner {
-  id: number;
-  name: string;
 }

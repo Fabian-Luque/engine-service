@@ -2,16 +2,11 @@ import { Controller, Inject } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 
 // import {
-//   AccountClosed,
-//   AccountDeposited,
-//   AccountOpened,
-//   AccountPasswordUpdated,
-//   AccountWithdrawn,
 //   MessageHandler,
 //   Topic,
 // } from 'libs/MessageModule';
 
-import { SendEmailCommand } from 'src/notification/application/command/SendEmailCommand';
+import { SendEmailCommand } from 'src/notification/application/command/email/SendEmailCommand';
 
 @Controller()
 export class NotificationIntegrationController {
@@ -22,7 +17,7 @@ export class NotificationIntegrationController {
   async sendNewAccountEmail(message): Promise<void> {
     await this.commandBus.execute<SendEmailCommand, void>(
       new SendEmailCommand({
-        accountId: message.accountId,
+        userId: message.accountId,
         to: message.email,
         subject: 'New account created',
         content: 'New account it opened with this email',
@@ -35,7 +30,7 @@ export class NotificationIntegrationController {
   async sendPasswordUpdatedEmail(message): Promise<void> {
     await this.commandBus.execute<SendEmailCommand, void>(
       new SendEmailCommand({
-        accountId: message.accountId,
+        userId: message.accountId,
         to: message.email,
         subject: 'Account password updated',
         content: 'Account password is updated',
@@ -48,7 +43,7 @@ export class NotificationIntegrationController {
   async sendAccountClosedEmail(message): Promise<void> {
     await this.commandBus.execute<SendEmailCommand, void>(
       new SendEmailCommand({
-        accountId: message.accountId,
+        userId: message.accountId,
         to: message.email,
         subject: 'Account closed',
         content: 'Account is closed',
@@ -61,7 +56,7 @@ export class NotificationIntegrationController {
   async sendDepositEmail(message): Promise<void> {
     await this.commandBus.execute<SendEmailCommand, void>(
       new SendEmailCommand({
-        accountId: message.accountId,
+        userId: message.accountId,
         to: message.email,
         subject: 'Deposited',
         content: 'Deposited into the account',
@@ -74,7 +69,7 @@ export class NotificationIntegrationController {
   async sendWithdrawnEmail(message): Promise<void> {
     await this.commandBus.execute<SendEmailCommand, void>(
       new SendEmailCommand({
-        accountId: message.accountId,
+        userId: message.accountId,
         to: message.email,
         subject: 'Withdrawn',
         content: 'It has been withdrawn from your account',

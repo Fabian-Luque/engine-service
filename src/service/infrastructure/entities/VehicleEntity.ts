@@ -7,8 +7,23 @@ export class VehicleEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   patent: string;
+
+  @Column()
+  model: string;
+
+  @Column()
+  brand: string;
+
+  @Column()
+  year: number;
+
+  @Column()
+  img: string;
+
+  @Column()
+  vin: string;
 
   @OneToMany(() => ServiceEntity, (service) => service.vehicle)
   services: ServiceEntity[];

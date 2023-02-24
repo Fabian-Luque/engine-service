@@ -1,11 +1,11 @@
 import { Inject, NotFoundException } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { ErrorMessage } from '../../domain/ErrorMessage';
-import { InjectionToken } from '../InjectionToken';
-import { FindServicesByUserIdQuery } from './FindServicesByUserIdQuery';
 
-import { ServiceQuery } from './ServiceQuery';
+import { ServiceQuery } from '../ServiceQuery';
 import { ServiceResult } from './ServiceResult';
+import { InjectionToken } from '../../InjectionToken';
+import { ErrorMessage } from '../../../domain/ErrorMessage';
+import { FindServicesByUserIdQuery } from './FindServicesByUserIdQuery';
 
 @QueryHandler(FindServicesByUserIdQuery)
 export class FindServicesByUserIdHandler

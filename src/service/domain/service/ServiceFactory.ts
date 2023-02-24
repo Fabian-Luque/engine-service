@@ -2,19 +2,19 @@ import { Inject } from '@nestjs/common';
 import { EventPublisher } from '@nestjs/cqrs';
 
 import {
-  VehicleOwner,
   Service,
   ServiceImplement,
   ServiceProperties,
   State,
-} from 'src/service/domain/Service';
-import { Vehicle } from './Vehicle';
+} from 'src/service/domain/service/Service';
+import { Vehicle } from '../vehicle/Vehicle';
 
 type CreateServiceOptions = Readonly<{
   vehicle: number;
-  vehicleOwner: VehicleOwner;
+  vehicleOwner: number;
   typeService: number;
   commentOwner: string;
+  garageId: number;
 }>;
 
 export class ServiceFactory {

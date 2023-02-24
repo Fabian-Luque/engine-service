@@ -3,8 +3,8 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 import { Transactional } from 'libs/Transactional';
 import { ErrorMessage } from '../../domain/ErrorMessage';
-import { ServiceFactory } from '../../domain/ServiceFactory';
-import { ServiceRepository } from '../../domain/ServiceRepository';
+import { ServiceFactory } from '../../domain/service/ServiceFactory';
+import { ServiceRepository } from '../../domain/service/ServiceRepository';
 
 import { InjectionToken } from '../InjectionToken';
 import { AddEvidenceCommand } from './AddEvidenceCommand';

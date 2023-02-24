@@ -1,12 +1,15 @@
 import { Inject } from '@nestjs/common';
 
 import { writeConnection } from 'libs/DatabaseModule';
-import { Service, ServiceProperties, State } from '../../domain/Service';
-import { ServiceFactory } from '../../domain/ServiceFactory';
-import { ServiceRepository } from '../../domain/ServiceRepository';
+import {
+  Service,
+  ServiceProperties,
+  State,
+} from '../../domain/service/Service';
+import { ServiceFactory } from '../../domain/service/ServiceFactory';
+import { ServiceRepository } from '../../domain/service/ServiceRepository';
 import { CommentEntity } from '../entities/CommentEntity';
 import { ServiceEntity } from '../entities/ServiceEntity';
-import { VehicleEntity } from '../entities/VehicleEntity';
 
 export class ServiceRepositoryImplement implements ServiceRepository {
   @Inject() private readonly serviceFactory: ServiceFactory;

@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
 import { readConnection } from 'libs/DatabaseModule';
-import { ServiceResult } from '../../application/query/ServiceResult';
-import { FindServiceByOTResult } from '../../application/query/FindServiceByOTResult';
-import { FindServicesByGarageIdResult } from '../../application/query/FindServicesByGarageIdResult';
+import { ServiceResult } from '../../application/query/service/ServiceResult';
+import { FindServiceByOTResult } from '../../application/query/service/FindServiceByOTResult';
+import { FindServicesByGarageIdResult } from '../../application/query/service/FindServicesByGarageIdResult';
 import { ServiceQuery } from '../../application/query/ServiceQuery';
 import { ServiceEntity } from '../entities/ServiceEntity';
-import { VehicleEntity } from '../entities/VehicleEntity';
-import { Vehicle, VehicleImplement } from '../../domain/Vehicle';
 
 @Injectable()
 export class ServiceQueryImplement implements ServiceQuery {

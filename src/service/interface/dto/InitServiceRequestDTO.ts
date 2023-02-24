@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsObject, IsString } from 'class-validator';
 
 export class InitServiceRequestDTO {
-  @IsNumber()
-  @ApiProperty({ example: 'ABCD12' })
-  readonly patent: string;
+  @IsObject()
+  @ApiProperty()
+  readonly vehicle: any;
 
-  @IsNumber()
-  @ApiProperty({ example: '1000' })
-  readonly vehicleOwner: number;
+  @IsObject()
+  @ApiProperty()
+  readonly vehicleOwner: any;
 
   @IsNumber()
   @ApiProperty({ example: '2' })
@@ -17,4 +17,8 @@ export class InitServiceRequestDTO {
   @IsString()
   @ApiProperty({ example: 'Lorem Ipsum' })
   readonly commentOwner: string;
+
+  @IsNumber()
+  @ApiProperty({ example: '2' })
+  readonly garageId: number;
 }

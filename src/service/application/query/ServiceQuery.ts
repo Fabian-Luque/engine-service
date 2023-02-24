@@ -1,6 +1,6 @@
-import { ServiceResult } from './ServiceResult';
-import { FindServiceByOTResult } from './FindServiceByOTResult';
-import { FindServicesByGarageIdResult } from './FindServicesByGarageIdResult';
+import { ServiceResult } from './service/ServiceResult';
+import { FindServiceByOTResult } from './service/FindServiceByOTResult';
+import { FindServicesByGarageIdResult } from './service/FindServicesByGarageIdResult';
 
 export interface ServiceQuery {
   findById: (id: number) => Promise<ServiceResult | null>;

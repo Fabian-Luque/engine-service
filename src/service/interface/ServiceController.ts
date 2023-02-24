@@ -19,15 +19,18 @@ import {
 import { AddCommentCommand } from '../application/command/AddCommentCommand';
 import { AddEvidenceCommand } from '../application/command/AddEvidenceCommand';
 import { AssingWorkerCommand } from '../application/command/AssingWorkerCommand';
+import { CreateVehicleCommand } from '../application/command/CreateVehicleCommand';
+import { CreateVehicleOwnerCommand } from '../application/command/CreateVehicleOwnerCommand';
 import { FinishServiceCommand } from '../application/command/FinishServiceCommand';
 import { InitServiceCommand } from '../application/command/InitServiceCommand';
 import { RequestSupplyCommand } from '../application/command/RequestSupplyCommand';
 import { UpdateDiagnosticCommand } from '../application/command/UpdateDiagnosticCommand';
 import { UpdateServiceStateCommand } from '../application/command/UpdateServiceStateCommand';
-import { FindServiceByIdQuery } from '../application/query/FindServiceByIdQuery';
-import { FindServicesByGarageIdQuery } from '../application/query/FindServicesByGarageIdQuery';
-import { FindServicesByUserIdQuery } from '../application/query/FindServicesByUserIdQuery';
-import { ErrorMessage } from '../domain/ErrorMessage';
+import { FindServiceByIdQuery } from '../application/query/service/FindServiceByIdQuery';
+import { FindServicesByGarageIdQuery } from '../application/query/service/FindServicesByGarageIdQuery';
+import { FindServicesByUserIdQuery } from '../application/query/service/FindServicesByUserIdQuery';
+import { FindVehicleByPatentQuery } from '../application/query/vehicle/FindVehicleByPatentQuery';
+import { FindVehicleOwnerByIdentifierQuery } from '../application/query/vehicleOwner/FindVehicleOwnerByIdentifierQuery';
 
 import { FindServicesResponseDTO } from './dto/FindServicesResponse';
 import { InitServiceRequestDTO } from './dto/InitServiceRequestDTO';
@@ -50,17 +53,31 @@ export class ServiceController {
   @ApiInternalServerErrorResponse({
     description: ResponseDescription.INTERNAL_SERVER_ERROR,
   })
-  async initService(@Body() body: InitServiceRequestDTO): Promise<void> {
-    // get or create vehicle
-    const vehicle = { id: 1, patent: 'CHFY80' };
-    // get or create userOwner
-    const userOwner = { id: 1, name: 'Fabian' };
+  async initService(@Body() body: InitServiceRequestDTO) {
+    let vehicleOwner = await this.queryBus.execute(
+      new FindVehicleOwnerByIdentifierQuery(body.vehicleOwner.identifier),
+    );
+    if (!vehicleOwner) {
+      const commandVehicleOwner = new CreateVehicleOwnerCommand(
+        body.vehicleOwner,
+      );
+      vehicleOwner = await this.commandBus.execute(commandVehicleOwner);
+    }
+    let vehicle = await this.queryBus.execute(
+      new FindVehicleByPatentQuery(body.vehicle.patent),
+    );
+
+    if (!vehicle) {
+      const commandVehicle = new CreateVehicleCommand(body.vehicle);
+      vehicle = await this.commandBus.execute(commandVehicle);
+    }
 
     const command = new InitServiceCommand(
       vehicle.id,
-      userOwner,
+      vehicleOwner.id,
       body.typeService,
       body.commentOwner,
+      body.garageId,
     );
     await this.commandBus.execute(command);
   }

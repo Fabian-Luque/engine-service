@@ -1,72 +1,56 @@
 import { Inject } from '@nestjs/common';
 
 import { writeConnection } from 'libs/DatabaseModule';
-import { Service, ServiceProperties, State } from '../../domain/Service';
-import { ServiceFactory } from '../../domain/ServiceFactory';
-import { ServiceRepository } from '../../domain/ServiceRepository';
-import { CommentEntity } from '../entities/CommentEntity';
-import { ServiceEntity } from '../entities/ServiceEntity';
 
-export class ServiceRepositoryImplement implements ServiceRepository {
-  @Inject() private readonly serviceFactory: ServiceFactory;
+import { VehicleOwnerEntity } from '../entities/VehicleOwnerEntity';
+import { VehicleOwner } from '../../domain/vehicleOwner/VehicleOwner';
+import { VehicleOwnerFactory } from '../../domain/vehicleOwner/VehicleOwnerFactory';
+import { VehicleOwnerRepository } from '../../domain/vehicleOwner/VehicleOwnerRepository';
 
-  async save(data: Service): Promise<void> {
+export class VehicleOwnerRepositoryImplement implements VehicleOwnerRepository {
+  @Inject() private readonly vehicleOwnerFactory: VehicleOwnerFactory;
+
+  async save(data: VehicleOwner): Promise<VehicleOwner> {
     const model = data;
     const entity = this.modelToEntity(model);
-    await writeConnection.manager.getRepository(ServiceEntity).save(entity);
-    const comments = entity.comments.map((comment) => {
-      return { ...comment, service: entity };
-    });
-    await writeConnection.manager.getRepository(CommentEntity).save(comments);
+    const vehicleOwner = await writeConnection.manager
+      .getRepository(VehicleOwnerEntity)
+      .save(entity);
+    return this.entityToModel(vehicleOwner);
   }
 
-  async findById(id: number): Promise<Service | null> {
-    const entity = await writeConnection.manager
-      .getRepository(ServiceEntity)
+  async findByIdentifierOrCreate(vehicleOwner): Promise<VehicleOwner> {
+    let entity = await writeConnection.manager
+      .getRepository(VehicleOwnerEntity)
       .findOne({
-        where: { id: id },
-        relations: ['vehicle', 'vehicleOwner', 'comments'],
+        where: { identifier: vehicleOwner.identifier },
+        relations: [''],
       });
-    return entity ? this.entityToModel(entity) : null;
+
+    if (!entity) {
+      const model = vehicleOwner;
+      const entityModel = this.modelToEntity(model);
+      entity = await writeConnection.manager
+        .getRepository(VehicleOwnerEntity)
+        .save(entityModel);
+    }
+    return this.entityToModel(entity);
   }
 
-  async findByIdAndUpdate(
-    id: number,
-    service: Service,
-  ): Promise<Service | null> {
-    const entity = await writeConnection.manager
-      .getRepository(ServiceEntity)
-      .findOneBy({ id: id });
-    return entity ? this.entityToModel(entity) : null;
-  }
-  async findByOT(ot: string): Promise<Service | null> {
-    const entity = await writeConnection.manager
-      .getRepository(ServiceEntity)
-      .findOneBy({ OT: ot });
-    return entity ? this.entityToModel(entity) : null;
-  }
-
-  private modelToEntity(model: Service) {
-    const properties = JSON.parse(JSON.stringify(model)) as ServiceProperties;
+  private modelToEntity(model: VehicleOwner) {
+    const properties = JSON.parse(JSON.stringify(model)) as VehicleOwner;
     return {
       ...properties,
-      diagnostic: properties.diagnostic,
-      createdAt: properties.createdAt,
-      deletedAt: properties.deletedAt,
     };
   }
 
-  private entityToModel(entity: ServiceEntity): Service {
-    return this.serviceFactory.reconstitute({
+  private entityToModel(entity: VehicleOwnerEntity): VehicleOwner {
+    return this.vehicleOwnerFactory.reconstitute({
       ...entity,
       id: entity.id,
-      state: State[entity.state],
-      commentOwner: entity.commentOwner,
-      typeService: entity.typeService,
-      billign: entity.billing,
-      evidences: entity.evidences,
-      comments: entity.comments,
-      requestService: entity.requests,
+      identifier: entity.identifier,
+      name: entity.name,
+      lastname: entity.lastname,
       createdAt: entity.createdAt,
       deletedAt: entity.deletedAt,
     });

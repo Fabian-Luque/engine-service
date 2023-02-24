@@ -7,8 +7,14 @@ export class VehicleOwnerEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ unique: true })
+  identifier: string;
+
   @Column()
   name: string;
+
+  @Column()
+  lastname: string;
 
   @Column()
   email: string;

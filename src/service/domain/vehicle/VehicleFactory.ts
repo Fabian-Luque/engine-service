@@ -1,11 +1,15 @@
 import { Inject } from '@nestjs/common';
 import { EventPublisher } from '@nestjs/cqrs';
 
-import { Vehicle, VehicleImplement, VehicleOwner } from './Vehicle';
+import { Vehicle, VehicleImplement } from './Vehicle';
 
 type CreateVehicleOptions = Readonly<{
-  vehicleOwner: VehicleOwner;
   patent: string;
+  model: string;
+  brand: string;
+  year: number;
+  vin: string;
+  img: string;
 }>;
 
 export class VehicleFactory {

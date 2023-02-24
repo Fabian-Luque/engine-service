@@ -1,7 +1,7 @@
 import { IQueryResult } from '@nestjs/cqrs';
-import { Evidence, RequestService, VehicleOwner } from '../../domain/Service';
-import { Vehicle, VehicleImplement } from '../../domain/Vehicle';
-import { VehicleEntity } from '../../infrastructure/entities/VehicleEntity';
+import { Evidence, RequestService } from '../../../domain/service/Service';
+import { VehicleEntity } from '../../../infrastructure/entities/VehicleEntity';
+import { VehicleOwnerEntity } from '../../../infrastructure/entities/VehicleOwnerEntity';
 
 export class ServiceResult implements IQueryResult {
   readonly id: number;
@@ -9,7 +9,7 @@ export class ServiceResult implements IQueryResult {
   readonly state: string;
   readonly commentOwner: string;
   readonly vehicle: VehicleEntity;
-  readonly vehicleOwner: VehicleOwner;
+  readonly vehicleOwner: VehicleOwnerEntity;
   readonly requests: RequestService[] | any;
   readonly comments: Comment[] | any;
   readonly diagnostic: string;

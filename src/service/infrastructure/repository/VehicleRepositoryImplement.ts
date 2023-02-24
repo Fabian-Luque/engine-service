@@ -1,19 +1,22 @@
 import { Inject } from '@nestjs/common';
 
 import { writeConnection } from 'libs/DatabaseModule';
-import { Vehicle } from '../../domain/Vehicle';
-import { VehicleProperties } from '../../domain/Vehicle';
-import { VehicleFactory } from '../../domain/VehicleFactory';
-import { VehicleRepository } from '../../domain/VehicleRepository';
+import { Vehicle } from '../../domain/vehicle/Vehicle';
+import { VehicleProperties } from '../../domain/vehicle/Vehicle';
+import { VehicleFactory } from '../../domain/vehicle/VehicleFactory';
+import { VehicleRepository } from '../../domain/vehicle/VehicleRepository';
 import { VehicleEntity } from '../entities/VehicleEntity';
 
 export class VehicleRepositoryImplement implements VehicleRepository {
   @Inject() private readonly vehicleFactory: VehicleFactory;
 
-  async save(data: Vehicle): Promise<void> {
+  async save(data: Vehicle): Promise<Vehicle> {
     const model = data;
     const entity = this.modelToEntity(model);
-    await writeConnection.manager.getRepository(VehicleEntity).save(entity);
+    const vehicle = await writeConnection.manager
+      .getRepository(VehicleEntity)
+      .save(entity);
+    return this.entityToModel(vehicle);
   }
 
   async findById(id: number): Promise<Vehicle | null> {
@@ -26,11 +29,11 @@ export class VehicleRepositoryImplement implements VehicleRepository {
     return entity ? this.entityToModel(entity) : null;
   }
 
-  async findByIdOrCreate(vehicle): Promise<Vehicle> {
+  async findByPatentOrCreate(vehicle): Promise<Vehicle> {
     let entity = await writeConnection.manager
       .getRepository(VehicleEntity)
       .findOne({
-        where: { id: vehicle.id },
+        where: { patent: vehicle.patent },
         relations: [''],
       });
 
@@ -43,16 +46,6 @@ export class VehicleRepositoryImplement implements VehicleRepository {
     }
 
     return this.entityToModel(entity);
-  }
-
-  async findByIdAndUpdate(
-    id: number,
-    vehicle: Vehicle,
-  ): Promise<Vehicle | null> {
-    const entity = await writeConnection.manager
-      .getRepository(VehicleEntity)
-      .findOneBy({ id: id });
-    return entity ? this.entityToModel(entity) : null;
   }
 
   private modelToEntity(model: Vehicle) {
